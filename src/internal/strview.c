@@ -38,15 +38,14 @@ string_view_t sv_pop(string_view_t source, size_t amount) {
 }
 
 string_view_t sv_slice(string_view_t source, size_t start, size_t end) {
+  if (end == SV_END)
+    end = source.length;
   if (start > source.length)
     start = source.length;
   if (end > source.length)
     end = source.length;
   if (end < start)
     end = start;
-  if (end == SV_END)
-    end = source.length;
-
   return sv_create(source.buffer + start, end - start);
 }
 

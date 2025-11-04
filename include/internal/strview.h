@@ -16,7 +16,7 @@ typedef bool (*sv_predicate_t)(const char c);
   (string_view_t) { .data = (__lit__), .length = strlen(__lit__) }
 #define SV(__lit__) sv_create(__lit__, strlen(__lit__))
 #define SV_FMT "%.*s"
-#define SV_ARG(__sv__) (int)(__sv__).length, (__sv__).data
+#define SV_ARG(__sv__) (int)(__sv__).length, (__sv__).buffer
 
 #define SV_END 0
 

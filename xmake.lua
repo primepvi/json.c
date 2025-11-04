@@ -4,4 +4,4 @@ add_includedirs("include")
 
 target("json")
 set_kind("binary")
-add_files("src/**/*.c")
+add_files("src/internal/*.c", "src/main.c")
