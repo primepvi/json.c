@@ -1,5 +1,6 @@
 #pragma once
 
+#include "vector.h"
 #include <stdbool.h>
 #include <stddef.h>
 
@@ -15,14 +16,16 @@ typedef enum {
 typedef struct json_value json_value_t;
 
 typedef struct json_array {
-  json_value_t **items;
-  size_t length;
+  vector_t *items;
 } json_array_t;
 
+typedef struct json_object_entry {
+  char *key;
+  json_value_t *value;
+} json_object_entry_t;
+
 typedef struct json_object {
-  char **keys;
-  json_value_t **values;
-  size_t length;
+  vector_t *entries;
 } json_object_t;
 
 typedef struct json_value {

@@ -18,3 +18,7 @@ void jsontoken_print(json_token_t token) {
   printf("token -> [%s] = " SV_FMT "\n", JSON_TOKEN_NAMES[token.kind],
          SV_ARG(token.lexeme));
 };
+
+const char *jsontoken_kindname(json_token_kind_t kind) {
+  return JSON_TOKEN_NAMES[kind];
+}

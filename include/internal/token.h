@@ -28,3 +28,4 @@ typedef struct json_token {
 
 static const char *JSON_TOKEN_NAMES[16];
 void jsontoken_print(json_token_t token);
+const char *jsontoken_kindname(json_token_kind_t kind);
