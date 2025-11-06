@@ -1,7 +1,8 @@
 #pragma once
 
-#include "../internal/strview.h"
-#include "value.h"
+#include "lib/strview.h"
+#include "lib/value.h"
+#include "lib/vector.h"
 
 json_value_t *json_parse(const char *source);
 void json_free(json_value_t *v);

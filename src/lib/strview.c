@@ -1,4 +1,4 @@
-#include "../../include/internal/strview.h"
+#include "strview.h"
 
 string_view_t sv_create(const char *buffer, size_t length) {
   return (string_view_t){.buffer = buffer, .length = length};

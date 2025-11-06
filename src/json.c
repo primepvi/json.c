@@ -1,6 +1,9 @@
-#include "../../include/json/json.h"
-#include "../../include/internal/lexer.h"
-#include "../../include/internal/parser.h"
+#include "json.h"
+
+#include "lib/lexer.h"
+#include "lib/parser.h"
+#include "lib/value.h"
+
 #include <ctype.h>
 #include <stdio.h>
 
@@ -48,8 +51,6 @@ void json_free(json_value_t *v) {
   }
 };
 
-void json_print(json_value_t *v) {};
-
 json_value_t *json_get(json_value_t *v, const char *path) {
   string_view_t view = sv_create(path, strlen(path));
   json_value_t *current = v;
@@ -76,6 +77,9 @@ json_value_t *json_get(json_value_t *v, const char *path) {
 };
 
 json_value_t *json_get_index(const json_value_t *arr, size_t index) {
+  if (arr->type != JSON_ARRAY)
+    return NULL;
+
   vector_t *items = arr->as.array.items;
   if (!items)
     return NULL;
@@ -84,6 +88,9 @@ json_value_t *json_get_index(const json_value_t *arr, size_t index) {
 };
 
 json_value_t *json_access(const json_value_t *v, string_view_t key) {
+  if (v->type != JSON_OBJECT)
+    return NULL;
+
   vector_t *entries = v->as.object.entries;
   if (!entries)
     return NULL;

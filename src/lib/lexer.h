@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../json/vector.h"
 #include "strview.h"
 #include "token.h"
+#include "vector.h"
 
 #include <stddef.h>
 

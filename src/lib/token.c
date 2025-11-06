@@ -1,4 +1,4 @@
-#include "../../include/internal/token.h"
+#include "token.h"
 
 static const char *JSON_TOKEN_NAMES[16] = {
     [JTOK_NULL] = "JTOK_NULL",

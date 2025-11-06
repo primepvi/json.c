@@ -1,4 +1,4 @@
-#include "../../include/internal/parser.h"
+#include "parser.h"
 
 json_parser_t *jsonparser_new(vector_t *tokens) {
   json_parser_t *parser = malloc(sizeof(json_parser_t));

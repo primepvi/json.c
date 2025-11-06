@@ -1,12 +1,12 @@
-#include "../../include/internal/lexer.h"
+#include "lexer.h"
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-static bool __isalnum_predicate(const char c) { return (bool)isalnum(c); }
-static bool __isdigit_predicate(const char c) { return (bool)isdigit(c); }
-static bool __isstr_predicate(const char c) { return c != '"'; }
-static bool __isspace_predicate(const char c) { return (bool)isspace(c); }
+static bool alnum_predicate(const char c) { return (bool)isalnum(c); }
+static bool digit_predicate(const char c) { return (bool)isdigit(c); }
+static bool str_predicate(const char c) { return c != '"'; }
+static bool space_predicate(const char c) { return (bool)isspace(c); }
 
 json_lexer_t *jsonlexer_new(string_view_t source) {
   json_lexer_t *lexer = malloc(sizeof(json_lexer_t));
@@ -33,19 +33,19 @@ vector_t *jsonlexer_lex(json_lexer_t *lexer) {
 
 json_token_t jsonlexer_tokenize(json_lexer_t *lexer) {
   string_view_t source = sv_slice(lexer->source, lexer->cursor, SV_END);
-  string_view_t spaces = sv_take_while(source, __isspace_predicate);
+  string_view_t spaces = sv_take_while(source, space_predicate);
   lexer->cursor += spaces.length;
 
   string_view_t block = sv_slice(source, spaces.length, SV_END);
   if (block.length <= 0)
     return (json_token_t){.kind = JTOK_EOF, .lexeme = SV("\0")};
 
-  string_view_t number = sv_take_while(block, __isdigit_predicate);
+  string_view_t number = sv_take_while(block, digit_predicate);
   if (number.length > 0 || sv_starts_with(block, SV("-"))) {
     return jsonlexer_tokenize_number(lexer);
   }
 
-  string_view_t text = sv_take_while(block, __isalnum_predicate);
+  string_view_t text = sv_take_while(block, alnum_predicate);
   if (text.length > 0) {
     lexer->cursor += text.length;
 
@@ -64,7 +64,7 @@ json_token_t jsonlexer_tokenize(json_lexer_t *lexer) {
 
   if (sv_starts_with(block, SV("\""))) {
     string_view_t content =
-        sv_take_while(sv_slice(block, 1, SV_END), __isstr_predicate);
+        sv_take_while(sv_slice(block, 1, SV_END), str_predicate);
 
     sv_shift(block, content.length); // removing content
     if (!sv_starts_with(block, SV("\""))) {

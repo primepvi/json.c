@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../json/value.h"
 #include "lexer.h"
+#include "value.h"
 
 #include <stdbool.h>
 #include <stddef.h>
